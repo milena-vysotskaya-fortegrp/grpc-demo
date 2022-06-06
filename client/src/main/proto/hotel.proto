@@ -1,0 +1,46 @@
+syntax = "proto3";
+import "airline.proto";
+import "google/protobuf/any.proto";
+import "google/type/money.proto";
+
+option java_package = "com.fortegrp.sync.hotel";
+option java_multiple_files = true;
+option java_outer_classname = "CustomHotelGeneratedName";
+option optimize_for = CODE_SIZE; //SPEED (default), LITE_RUNTIME
+
+service HotelService {
+  rpc getHotels(GetHotelRequest) returns (GetHotelResponse);
+}
+
+message GetHotelRequest {
+  string hotelId = 1;
+
+}
+
+message GetHotelResponse {
+  repeated Hotel hotel = 1;
+  map<string, string> validationDetails = 2; //cannot be repeated
+  //repeated google.protobuf.Any details = 3 ;
+}
+
+message Hotel {
+  reserved 9 to 12;
+  reserved "id";
+
+  string name = 1;
+  string description = 2;
+  int64 flightOperator = 3;
+  Airline airline = 4;
+
+  enum Type {
+    APARTMENT = 0; //default
+    VILLA = 1;
+    BLOCKS = 2;
+  }
+  Type type = 5;
+
+  oneof location { //Setting a oneof field will automatically clear all other members of the oneof
+    string city = 6;
+    string coordinates = 7;
+  }
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+option java_package = "com.fortegrp.sync.airline";
+option java_multiple_files = true;
+
+service AirlineService {
+  rpc getAirlines(GetAirlineRequest) returns (GetAirlineResponse);
+}
+
+message GetAirlineRequest {
+  string airlineId = 1;
+
+}
+
+message GetAirlineResponse {
+  repeated Airline airline = 1;
+}
+
+message Airline {
+  string name = 1;
+}
+
